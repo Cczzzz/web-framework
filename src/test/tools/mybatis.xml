@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="mybatis.properties"/>
+
+    <!-- 数据库驱动 -->
+    <context id="Tables" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <!-- 表名或字段名为sql关键字时，默认添加分隔符 -->
+        <property name="autoDelimitKeywords" value="true"/>
+        <!-- 设置默认分隔符为mysql的分隔符 -->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- bean,dao生成插件 -->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+
+            <property name="mappers" value="com.cc.framework.mapper.BaseMapper"/>
+            <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+            <property name="caseSensitive" value="true"/>
+            <!--<property name="beginningDelimiter" value="`"/>-->
+            <!--<property name="endingDelimiter" value="`"/>-->
+        </plugin>
+
+        <!-- 增加序列化接口 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <!-- 注释sql分隔符 -->
+        <commentGenerator>
+            <property name="beginningDelimiter" value="`"/>
+            <property name="endingDelimiter" value="`"/>
+        </commentGenerator>
+
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}" userId="${jdbc.user}" password="${jdbc.password}">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置 -->
+        <javaModelGenerator targetPackage="${modelPath}"
+                            targetProject="${projectPath}">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成DAO的包名和位置 -->
+        <sqlMapGenerator targetPackage="${xmlPath}"
+                         targetProject="${projectPath}">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成映射文件的包名和位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="${javaPath}" targetProject="${projectPath}">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <table tableName="BENCHMARK_INFO"/>
+        <table tableName="SYS_USER">
+            <generatedKey column="id" sqlStatement="S_"/>
+        </table>
+    </context>
+</generatorConfiguration>

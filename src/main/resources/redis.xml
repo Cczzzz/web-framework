@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<servers>
+  <server>
+    <id>default</id>
+    <host>10.116.18.112</host>
+    <port>6379</port>
+    <password></password>
+    <database>0</database>
+  </server>
+</servers>
