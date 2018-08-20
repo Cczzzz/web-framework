@@ -59,12 +59,12 @@ public class JedisWritePool extends BaseJedisRWSeparationPool<Jedis> implements 
     private void initPool() {
         if (factory == null) {
             factory = new MasterJedisFactory(configuration.getMaster());
-            initPool(poolConfig, factory);
+            super.initPool(poolConfig, factory);
         } else {
             factory.setInstance(configuration.getMaster());
             // although we clear the pool, we still have to check the returned object
             // in getResource, this call only clears idle instances, not borrowed instances
-            internalPool.clear();
+            super.internalPool.clear();
         }
         log.info("Created JedisPool to master at " + configuration.getMaster());
     }

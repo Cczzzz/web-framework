@@ -1,6 +1,5 @@
 package com.cc;
 
-import redis.clients.jedis.JedisSentinelPool;
 
 public class Redis extends Thread {
     private volatile static Redis redis = null;

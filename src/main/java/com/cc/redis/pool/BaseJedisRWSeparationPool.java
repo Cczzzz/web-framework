@@ -6,7 +6,6 @@ import com.cc.redis.Sentine.SentinelListener;
 import com.cc.redis.pool.support.LinkRoute;
 import com.cc.redis.pool.support.Master;
 import com.cc.redis.pool.support.Slaves;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -21,16 +20,24 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
+//todo 应该根据配置文件 交给代理去创建
 public abstract class BaseJedisRWSeparationPool<T> extends Pool<T> implements InitializingBean, Master<T> {
 
     private static final Logger log = LoggerFactory.getLogger(BaseJedisRWSeparationPool.class);
-
+    //路由管理
     private static final LinkRoute rout = new LinkRoute();
-
+    //从服务器链接
     protected Slaves<T> slavesPool;
+    //哨兵监听
     protected Set<SentinelListener> sentinelListeners;
+    //全局配置
     protected RedisConfiguration configuration;
 
+    /**
+     * 链接路由
+     *
+     * @return
+     */
     @Override
     public T getResource() {
         if (rout.isRead()) {
@@ -39,18 +46,13 @@ public abstract class BaseJedisRWSeparationPool<T> extends Pool<T> implements In
         return super.getResource();
     }
 
+    abstract void init(RedisConfiguration configuration);
+
     public BaseJedisRWSeparationPool() {
     }
 
-    public HostAndPort toHostAndPort(List<String> getMasterAddrByNameResult) {
-        String host = getMasterAddrByNameResult.get(0);
-        int port = Integer.parseInt(getMasterAddrByNameResult.get(1));
-        return new HostAndPort(host, port);
-    }
-
-
     /**
-     * 加载主从实例信息
+     * 从哨兵加载主从实例信息
      *
      * @param configuration
      */
@@ -92,12 +94,19 @@ public abstract class BaseJedisRWSeparationPool<T> extends Pool<T> implements In
                 }
             }
         }
-        subSentinel(configuration);
     }
 
+    /**
+     * 订阅事件
+     *
+     * @param configuration
+     */
     protected void subSentinel(RedisConfiguration configuration) {
-        JedisWritePool.FailoverHandler failoverHandler = new JedisWritePool.FailoverHandler(this);
-        this.sentinelListeners = new HashSet<>();
+        //事件回调处理者
+        JedisWritePool.FailoverHandler failoverHandler = new JedisWritePool.FailoverHandler(this, slavesPool);
+        if (this.sentinelListeners == null) {
+            this.sentinelListeners = new HashSet<>();
+        }
         for (HostAndPort sentinel : configuration.getSentinelhostAndPorts()) {
             SentinelListener sentinelListener = new SentinelListener(sentinel.getHost(), sentinel.getPort(), failoverHandler);
             this.sentinelListeners.add(sentinelListener);
@@ -107,8 +116,12 @@ public abstract class BaseJedisRWSeparationPool<T> extends Pool<T> implements In
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        //加载配置
         replenishConfigBySentinel(configuration);
+        //初始化连接池 主从
         init(configuration);
+        //启动监听
+        subSentinel(configuration);
     }
 
     public RedisConfiguration getConfiguration() {
@@ -119,11 +132,15 @@ public abstract class BaseJedisRWSeparationPool<T> extends Pool<T> implements In
         this.configuration = configuration;
     }
 
-    abstract void init(RedisConfiguration configuration);
-
     //新的哨兵上线
     public void findNewSentinl(HostAndPort hostAndPort) {
 
+    }
+
+    public HostAndPort toHostAndPort(List<String> getMasterAddrByNameResult) {
+        String host = getMasterAddrByNameResult.get(0);
+        int port = Integer.parseInt(getMasterAddrByNameResult.get(1));
+        return new HostAndPort(host, port);
     }
 
     static class FailoverHandler implements SentinelEventHandler {
@@ -134,9 +151,11 @@ public abstract class BaseJedisRWSeparationPool<T> extends Pool<T> implements In
 
         BaseJedisRWSeparationPool jedisReadWritePool;
 
+        Slaves slaves;
 
-        public FailoverHandler(BaseJedisRWSeparationPool jedisReadWritePool) {
+        public FailoverHandler(BaseJedisRWSeparationPool jedisReadWritePool, Slaves slaves) {
             this.jedisReadWritePool = jedisReadWritePool;
+            this.slaves = slaves;
         }
 
         @Override

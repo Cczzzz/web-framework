@@ -1,7 +1,5 @@
 package com.cc.redis.pool.support;
 
-import java.util.Objects;
-
 public class LinkRoute extends ThreadLocal<String> {
 
     private static final String READ = "read";
