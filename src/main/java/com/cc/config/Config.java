@@ -4,7 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.cc.mapper.BaseMapper;
-import com.cc.redis.JedisReadWritePool;
+import com.cc.redis.pool.JedisWritePool;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -90,7 +90,7 @@ public class Config {
 
     @Bean
     public Pool<Jedis> redisPool() {
-        JedisReadWritePool pool = new JedisReadWritePool();
+        JedisWritePool pool = new JedisWritePool();
         return pool;
     }
 

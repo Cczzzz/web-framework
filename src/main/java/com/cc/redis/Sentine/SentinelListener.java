@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Created by chenchang on 2018/8/15.
  */
 public class SentinelListener extends Thread {
-
     private static final Logger log = LoggerFactory.getLogger(SentinelListener.class);
 
     private String host;
@@ -19,14 +18,14 @@ public class SentinelListener extends Thread {
     private long subscribeRetryWaitTimeMillis = 5000;
     private Jedis j;
     private AtomicBoolean running = new AtomicBoolean(false);
-    private SentinelEventHandler event;
+    private SentinelEventHandler handler;
 
     private static final String channels[] = new String[]{"+sdown", "-sdown", "+odown", "-odown", "+switch-master",};
 
-    public SentinelListener(String host, int port, SentinelEventHandler event) {
+    public SentinelListener(String host, int port, SentinelEventHandler handler) {
         this.host = host;
         this.port = port;
-        this.event = event;
+        this.handler = handler;
     }
 
     public void run() {
@@ -38,7 +37,7 @@ public class SentinelListener extends Thread {
             j = new Jedis(host, port);
 
             try {
-                j.subscribe(new SentinelPubSuber(this.event), channels);
+                j.subscribe(new SentinelPubSuber(this.handler), channels);
 
             } catch (JedisConnectionException e) {
 
@@ -58,4 +57,5 @@ public class SentinelListener extends Thread {
             }
         }
     }
+
 }

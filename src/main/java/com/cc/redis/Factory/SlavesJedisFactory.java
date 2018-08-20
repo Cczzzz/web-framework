@@ -3,7 +3,9 @@ package com.cc.redis.Factory;
 import com.cc.redis.Config.RedisInstance;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by chenchang on 2018/8/15.
@@ -12,9 +14,8 @@ public class SlavesJedisFactory extends BaseJedisFactory {
 
     List<RedisInstance> slaves = new ArrayList<>();
 
-
-    public SlavesJedisFactory(List<RedisInstance> slaves) {
-        this.slaves = slaves;
+    public SlavesJedisFactory(Map<String, RedisInstance> slaves) {
+        //  this.slaves = slaves;
     }
 
     @Override

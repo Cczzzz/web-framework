@@ -1,5 +1,7 @@
 package com.cc;
 
+import redis.clients.jedis.JedisSentinelPool;
+
 public class Redis extends Thread {
     private volatile static Redis redis = null;
 
@@ -22,6 +24,7 @@ public class Redis extends Thread {
     }
 
     public static void main(String[] args) {
+
         Redis redis = new Redis();
         Redis redis2 = new Redis();
         Redis redis3 = new Redis();

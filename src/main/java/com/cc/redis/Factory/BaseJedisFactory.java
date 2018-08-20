@@ -1,5 +1,6 @@
 package com.cc.redis.Factory;
 
+import com.cc.redis.Config.RedisConfiguration;
 import com.cc.redis.Config.RedisInstance;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.PooledObjectFactory;
@@ -15,14 +16,15 @@ public abstract class BaseJedisFactory implements PooledObjectFactory<Jedis> {
 
     abstract RedisInstance getInstance();
 
+    RedisConfiguration configuration;
 
     @Override
     public void activateObject(PooledObject<Jedis> pooledJedis)
             throws Exception {
         final BinaryJedis jedis = pooledJedis.getObject();
-//        if (jedis.getDB() != getInstance().getDatabase()) {
-//            jedis.select(getInstance().getDatabase());
-//        }
+        if (jedis.getDB() != configuration.getDatabase()) {
+            jedis.select(configuration.getDatabase());
+        }
     }
 
     @Override
@@ -43,21 +45,19 @@ public abstract class BaseJedisFactory implements PooledObjectFactory<Jedis> {
     }
 
     @Override
-    public PooledObject<Jedis> makeObject() throws Exception {
+    public PooledObject<Jedis> makeObject() {
         final HostAndPort hostAndPort = this.getInstance().getHostAndPort();
-        final Jedis jedis = new Jedis(hostAndPort.getHost(), hostAndPort.getPort(), 300);
-//
-//        jedis.connect();
-//        if (null != this.getInstance().getPassword()) {
-//            jedis.auth(this.getInstance().getPassword());
-//        }
-//        if (getInstance().getDatabase() != 0) {
-//            jedis.select(getInstance().getDatabase());
-//        }
-//        if (getInstance().getClientName() != null) {
-//            jedis.clientSetname(getInstance().getClientName());
-//        }
-
+        final Jedis jedis = new Jedis(hostAndPort.getHost(), hostAndPort.getPort(), configuration.getTimeout());
+        jedis.connect();
+        if (null != this.configuration.getPassword()) {
+            jedis.auth(this.configuration.getPassword());
+        }
+        if (configuration.getDatabase() != 0) {
+            jedis.select(configuration.getDatabase());
+        }
+        if (configuration.getClientName() != null) {
+            jedis.clientSetname(configuration.getClientName());
+        }
         return new DefaultPooledObject<Jedis>(jedis);
     }
 
