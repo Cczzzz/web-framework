@@ -1,9 +1,9 @@
-package com.cc.redis.Factory;
+package com.cc.redis.core.factory;
 
-import com.cc.redis.Config.RedisInstance;
+
+import com.cc.redis.core.config.RedisInstance;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

@@ -1,6 +1,6 @@
-package com.cc.redis.Factory;
+package com.cc.redis.core.factory;
 
-import com.cc.redis.Config.RedisInstance;
+import com.cc.redis.core.config.RedisInstance;
 import org.apache.commons.pool2.PooledObjectFactory;
 import redis.clients.jedis.Jedis;
 

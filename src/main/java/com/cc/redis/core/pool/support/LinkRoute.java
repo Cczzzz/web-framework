@@ -1,4 +1,4 @@
-package com.cc.redis.pool.support;
+package com.cc.redis.core.pool.support;
 
 public class LinkRoute extends ThreadLocal<String> {
 

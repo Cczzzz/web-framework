@@ -1,4 +1,4 @@
-package com.cc.redis.Sentine;
+package com.cc.redis.core.sentine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,6 @@ public class SentinelListener extends Thread {
                 j.subscribe(new SentinelPubSuber(this.handler), channels);
 
             } catch (JedisConnectionException e) {
-
                 if (running.get()) {
                     log.error("Lost connection to Sentinel at " + host
                             + ":" + port

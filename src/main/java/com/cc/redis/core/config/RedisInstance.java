@@ -1,8 +1,6 @@
-package com.cc.redis.Config;
+package com.cc.redis.core.config;
 
 import redis.clients.jedis.HostAndPort;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by chenchang on 2018/8/15.

@@ -1,4 +1,4 @@
-package com.cc.redis.Sentine;
+package com.cc.redis.core.sentine;
 
 /**
  * Created by chenchang on 2018/8/17.

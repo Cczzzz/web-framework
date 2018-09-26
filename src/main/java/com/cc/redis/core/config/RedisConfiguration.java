@@ -1,4 +1,4 @@
-package com.cc.redis.Config;
+package com.cc.redis.core.config;
 
 import redis.clients.jedis.HostAndPort;
 

@@ -1,4 +1,4 @@
-package com.cc.redis.Sentine;
+package com.cc.redis.core.sentine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

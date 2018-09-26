@@ -4,14 +4,11 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.cc.mapper.BaseMapper;
-import com.cc.redis.pool.JedisWritePool;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import redis.clients.jedis.Jedis;
-import redis.clients.util.Pool;
 import tk.mybatis.spring.mapper.MapperScannerConfigurer;
 
 import javax.sql.DataSource;
@@ -87,24 +84,10 @@ public class Config {
         filterBean.setInitParameters(initParameters);
         return filterBean;
     }
-
-    @Bean
-    public Pool<Jedis> redisPool() {
-        JedisWritePool pool = new JedisWritePool();
-        return pool;
-    }
-
-
-//    /**
-//     * fastJson转换器
-//      */
+//
 //    @Bean
-//    public HttpMessageConverters fastJsonHttpMessageConverters() {
-//        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-//        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-//        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue);
-//        fastConverter.setFastJsonConfig(fastJsonConfig);
-//        return new HttpMessageConverters(fastConverter);
+//    public Pool<Jedis> redisPool() {
+//        BaseJedisRWSeparationPool pool = new JedisWritePool();
+//        return pool;
 //    }
-
 }

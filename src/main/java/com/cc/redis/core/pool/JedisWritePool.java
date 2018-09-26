@@ -1,10 +1,10 @@
-package com.cc.redis.pool;
+package com.cc.redis.core.pool;
 
 
-import com.cc.redis.Config.RedisConfiguration;
-import com.cc.redis.Config.RedisInstance;
-import com.cc.redis.Factory.MasterJedisFactory;
-import com.cc.redis.Factory.SlavesJedisFactory;
+import com.cc.redis.core.config.RedisConfiguration;
+import com.cc.redis.core.config.RedisInstance;
+import com.cc.redis.core.factory.MasterJedisFactory;
+import com.cc.redis.core.factory.SlavesJedisFactory;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
