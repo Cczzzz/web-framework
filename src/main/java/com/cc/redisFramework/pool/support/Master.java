@@ -1,4 +1,4 @@
-package com.cc.redis.pool.support;
+package com.cc.redisFramework.pool.support;
 
 import redis.clients.jedis.HostAndPort;
 

@@ -1,8 +1,8 @@
-package com.cc.redis.pool;
+package com.cc.redisFramework.pool;
 
-import com.cc.redis.Config.RedisConfiguration;
-import com.cc.redis.Config.RedisInstance;
-import com.cc.redis.pool.support.Slaves;
+import com.cc.redisFramework.Config.RedisConfiguration;
+import com.cc.redisFramework.Config.RedisInstance;
+import com.cc.redisFramework.pool.support.Slaves;
 import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.HostAndPort;

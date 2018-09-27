@@ -1,11 +1,11 @@
-package com.cc.redis.pool;
+package com.cc.redisFramework.pool;
 
-import com.cc.redis.Config.RedisConfiguration;
-import com.cc.redis.Sentine.SentinelEventHandler;
-import com.cc.redis.Sentine.SentinelListener;
-import com.cc.redis.pool.support.LinkRoute;
-import com.cc.redis.pool.support.Master;
-import com.cc.redis.pool.support.Slaves;
+import com.cc.redisFramework.Config.RedisConfiguration;
+import com.cc.redisFramework.Sentine.SentinelEventHandler;
+import com.cc.redisFramework.Sentine.SentinelListener;
+import com.cc.redisFramework.pool.support.LinkRoute;
+import com.cc.redisFramework.pool.support.Master;
+import com.cc.redisFramework.pool.support.Slaves;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;

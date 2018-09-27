@@ -1,7 +1,7 @@
-package com.cc.redis.pool.support;
+package com.cc.redisFramework.pool.support;
 
-import com.cc.redis.Config.RedisConfiguration;
-import com.cc.redis.Config.RedisInstance;
+import com.cc.redisFramework.Config.RedisConfiguration;
+import com.cc.redisFramework.Config.RedisInstance;
 import redis.clients.jedis.HostAndPort;
 
 public interface Slaves<T> {

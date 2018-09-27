@@ -1,7 +1,7 @@
-package com.cc.redis.Factory;
+package com.cc.redisFramework.Factory;
 
-import com.cc.redis.Config.RedisConfiguration;
-import com.cc.redis.Config.RedisInstance;
+import com.cc.redisFramework.Config.RedisConfiguration;
+import com.cc.redisFramework.Config.RedisInstance;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
