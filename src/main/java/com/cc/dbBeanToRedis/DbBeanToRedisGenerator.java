@@ -1,23 +1,15 @@
 package com.cc.dbBeanToRedis;
 
-import com.iquantex.orm.redis.tool.RedisBean;
-import com.iquantex.orm.redis.tool.RedisField;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.FieldDoc;
 import com.sun.javadoc.RootDoc;
-import com.sun.tools.javac.util.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * Created by chenchang on 2018/9/25.
@@ -36,17 +28,18 @@ public class DbBeanToRedisGenerator {
     /**
      * 显示DocRoot中的基本信息
      */
-    public static void show() {
+    public static Map<String, Map<String, String>> show() {
         ClassDoc[] classes = rootDoc.classes();
-
+        Map<String, Map<String, String>> commentMap = new HashMap<>();
         for (ClassDoc classDoc : classes) {
             FieldDoc[] fieldDoc = classDoc.fields(false);
             Map<String, String> map = new HashMap<>(fieldDoc.length);
             for (FieldDoc doc : fieldDoc) {
                 map.put(doc.name(), doc.commentText());
             }
-            comment_MAP.put(classDoc.qualifiedName(), map);
+            commentMap.put(classDoc.qualifiedName(), map);
         }
+        return commentMap;
     }
 
     private final static String CLASS_SUFFIX = ".class";
@@ -54,7 +47,7 @@ public class DbBeanToRedisGenerator {
 
     private final static Map<String, Class> STRING_CLASS_MAP = new HashMap<>();
     private final static List<String> STRING_JAVA_FILE_List = new ArrayList<>();
-    private final static Map<String, Map<String, String>> comment_MAP = new HashMap<>();
+    //  private final static Map<String, Map<String, String>> comment_MAP = new HashMap<>();
     private static String projectPath;
     private static String classesPath;
     private static String javaesPath;
@@ -74,83 +67,83 @@ public class DbBeanToRedisGenerator {
 
         docArgs.addAll(Arrays.asList("-doclet",
                 Doclet.class.getName(),
-                "-encoding", "utf-8",  "-classpath",
+                "-encoding", "utf-8", "-classpath",
                 classesPath));
 
         for (String s : STRING_JAVA_FILE_List) {
             docArgs.add(s);
         }
         com.sun.tools.javadoc.Main.execute(docArgs.toArray(new String[docArgs.size()]));
-        show();
-        List<RedisBean> redisBeanList = transformation(
-                c -> c.getAnnotation(Table.class) != null,
-                f -> f.getAnnotation(Column.class) != null,
-                f -> f.getAnnotation(Id.class) != null, null);
-        CallQunatexGenerator.call(redisBeanList, javaesPath, BEAN_PAHT, DAO_PATH);
+        Map<String, Map<String, String>> comment_MAP = show();
+//        List<RedisBean> redisBeanList = transformation(
+//                c -> c.getAnnotation(Table.class) != null,
+//                f -> f.getAnnotation(Column.class) != null,
+//                f -> f.getAnnotation(Id.class) != null, null);
+        //  CallQunatexGenerator.call(redisBeanList, javaesPath, BEAN_PAHT, DAO_PATH);
     }
 
 
     static String BEAN_PAHT = "com.iquantex.calculate.redis.bean";
     static String DAO_PATH = "com.iquantex.calculate.redis.dao";
 
-
-    private static List<RedisBean> transformation(Filter<Class> calssFilter, Filter<Field> redisColumnFiler, Filter<Field> FKeyFiler, Function<Class, List<List<String>>> getIndex) throws NoSuchFieldException, IllegalAccessException {
-        List<RedisBean> list = new ArrayList<>();
-        for (Map.Entry<String, Class> entry : STRING_CLASS_MAP.entrySet()) {
-            String name = entry.getKey();
-            Class c = entry.getValue();
-            RedisBean redisBean = new RedisBean();
-            redisBean.setType("A");
-            redisBean.setBase_bean_name("BaseHashBean");
-            redisBean.setBase_dao_name("BaseHashRedis");
-            redisBean.setBean_name(c.getSimpleName());
-
-            if (!calssFilter.accepts(c)) {
-                continue;
-            }
-            Field[] fields = c.getDeclaredFields();
-            Map<String, String> comment = comment_MAP.get(name);
-
-            List<RedisField> redisFields = new ArrayList<>();
-            Map<String, String> field2Type = new HashMap<>();
-            List<String> pkeys = new ArrayList<>();
-            List<List<String>> index = getIndex.apply(c);
-
-            for (Field field : fields) {
-                if (redisColumnFiler.accepts(field)) {
-                    RedisField redisField = new RedisField();
-                    redisField.setField_name(field.getName());
-
-                    String fieldType = field.getType().getSimpleName();
-                    if (field.getType().isAssignableFrom(Date.class)) {
-                        fieldType = Long.class.getSimpleName();
-                    }
-
-                    Field field_type = RedisField.class.getDeclaredField("field_type");
-                    field_type.setAccessible(true);
-                    field_type.set(redisField, fieldType);
-                    field2Type.put(field.getName(), fieldType);
-
-                    Field field_is_key = RedisField.class.getDeclaredField("field_is_key");
-                    field_is_key.setAccessible(true);
-                    if (FKeyFiler.accepts(field)) {
-                        field_is_key.set(redisField, 1);
-                        pkeys.add(field.getName());
-                    } else {
-                        field_is_key.set(redisField, 0);
-                    }
-                    redisField.setComment(comment.get(field.getName()));
-                    redisFields.add(redisField);
-                }
-            }
-            redisBean.setField_list(redisFields);
-            redisBean.setPkeys(pkeys);
-            redisBean.setIndex_list(index);
-            redisBean.setField2Type(field2Type);
-            list.add(redisBean);
-        }
-        return list;
-    }
+//
+//    private static List<RedisBean> transformation(Filter<Class> calssFilter, Filter<Field> redisColumnFiler, Filter<Field> FKeyFiler, Function<Class, List<List<String>>> getIndex) throws NoSuchFieldException, IllegalAccessException {
+//        List<RedisBean> list = new ArrayList<>();
+//        for (Map.Entry<String, Class> entry : STRING_CLASS_MAP.entrySet()) {
+//            String name = entry.getKey();
+//            Class c = entry.getValue();
+//            RedisBean redisBean = new RedisBean();
+//            redisBean.setType("A");
+//            redisBean.setBase_bean_name("BaseHashBean");
+//            redisBean.setBase_dao_name("BaseHashRedis");
+//            redisBean.setBean_name(c.getSimpleName());
+//
+//            if (!calssFilter.accepts(c)) {
+//                continue;
+//            }
+//            Field[] fields = c.getDeclaredFields();
+//            Map<String, String> comment = comment_MAP.get(name);
+//
+//            List<RedisField> redisFields = new ArrayList<>();
+//            Map<String, String> field2Type = new HashMap<>();
+//            List<String> pkeys = new ArrayList<>();
+//            List<List<String>> index = getIndex.apply(c);
+//
+//            for (Field field : fields) {
+//                if (redisColumnFiler.accepts(field)) {
+//                    RedisField redisField = new RedisField();
+//                    redisField.setField_name(field.getName());
+//
+//                    String fieldType = field.getType().getSimpleName();
+//                    if (field.getType().isAssignableFrom(Date.class)) {
+//                        fieldType = Long.class.getSimpleName();
+//                    }
+//
+//                    Field field_type = RedisField.class.getDeclaredField("field_type");
+//                    field_type.setAccessible(true);
+//                    field_type.set(redisField, fieldType);
+//                    field2Type.put(field.getName(), fieldType);
+//
+//                    Field field_is_key = RedisField.class.getDeclaredField("field_is_key");
+//                    field_is_key.setAccessible(true);
+//                    if (FKeyFiler.accepts(field)) {
+//                        field_is_key.set(redisField, 1);
+//                        pkeys.add(field.getName());
+//                    } else {
+//                        field_is_key.set(redisField, 0);
+//                    }
+//                    redisField.setComment(comment.get(field.getName()));
+//                    redisFields.add(redisField);
+//                }
+//            }
+//            redisBean.setField_list(redisFields);
+//            redisBean.setPkeys(pkeys);
+//            redisBean.setIndex_list(index);
+//            redisBean.setField2Type(field2Type);
+//            list.add(redisBean);
+//        }
+//        return list;
+//    }
 
     private static void scan(File file) throws ClassNotFoundException {
         if (file.isDirectory()) {

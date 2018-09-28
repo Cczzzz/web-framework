@@ -1,4 +1,4 @@
-package com.cc.redis.Test;
+package com.cc.redisFramework.Test;
 
 import com.cc.bean.Student;
 import org.apache.commons.pool2.PooledObject;
@@ -11,7 +11,6 @@ public class TestPool extends GenericObjectPool<Student> {
     public TestPool(PooledObjectFactory<Student> factory, GenericObjectPoolConfig config) {
         super(factory, config);
     }
-
 
     public static void main(String[] args) {
         GenericObjectPoolConfig config = new GenericObjectPoolConfig();
@@ -27,13 +26,13 @@ public class TestPool extends GenericObjectPool<Student> {
         TestPool pool = new TestPool(new factory(), config);
         new Thread(() -> {
             try {
-              //  while (true) {
-                    Student student = pool.borrowObject();
-                    System.out.println(student);
-                    student.setActivity(false);
-                    pool.returnObject(student);
-                    Thread.sleep(500);
-             //   }
+                //  while (true) {
+                Student student = pool.borrowObject();
+                System.out.println(student);
+                student.setActivity(false);
+                pool.returnObject(student);
+                Thread.sleep(500);
+                //   }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -62,7 +61,7 @@ public class TestPool extends GenericObjectPool<Student> {
 
         @Override
         public boolean validateObject(PooledObject<Student> p) {
-            System.out.println("validateObject=="+p.getObject().isActivity());
+            System.out.println("validateObject==" + p.getObject().isActivity());
             return p.getObject().isActivity();
         }
 
