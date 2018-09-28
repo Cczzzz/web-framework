@@ -70,14 +70,18 @@ public class DbBeanToRedisGenerator {
         File root = new File(classesPath + File.separator + packagePath);
         scan(root);
         LOGGER.info("扫描完成。。。");
+        List<String> docArgs = new ArrayList<>();
+
+        docArgs.addAll(Arrays.asList("-doclet",
+                Doclet.class.getName(),
+                "-encoding", "utf-8",  "-classpath",
+                classesPath));
+
         for (String s : STRING_JAVA_FILE_List) {
-            com.sun.tools.javadoc.Main.execute(new String[]{"-doclet",
-                    Doclet.class.getName(),
-                    "-encoding", "utf-8", "-classpath",
-                    classesPath,
-                    s});
-            show();
+            docArgs.add(s);
         }
+        com.sun.tools.javadoc.Main.execute(docArgs.toArray(new String[docArgs.size()]));
+        show();
         List<RedisBean> redisBeanList = transformation(
                 c -> c.getAnnotation(Table.class) != null,
                 f -> f.getAnnotation(Column.class) != null,
