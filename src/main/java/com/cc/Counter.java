@@ -24,4 +24,7 @@ public class Counter {
         }
         return true;
     }
+
+    public static void main(String[] args) {
+    }
 }

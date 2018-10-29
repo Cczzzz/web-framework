@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.demo.dao.java.PmsEquityPositionMapper">
+  <resultMap id="BaseResultMap" type="com.cc.demo.model.PmsEquityPosition">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="PORTFOLIO_CODE" jdbcType="VARCHAR" property="portfolioCode" />
+    <id column="HIS_DATE" jdbcType="TIMESTAMP" property="hisDate" />
+    <id column="SECU_CODE" jdbcType="VARCHAR" property="secuCode" />
+    <id column="ASSET_STATUS" jdbcType="VARCHAR" property="assetStatus" />
+    <result column="PARENT_PORTFOLIO_CODE" jdbcType="VARCHAR" property="parentPortfolioCode" />
+    <result column="ORG_DATE" jdbcType="TIMESTAMP" property="orgDate" />
+    <result column="SECU_NAME" jdbcType="VARCHAR" property="secuName" />
+    <result column="SECU_TYPE_CODE" jdbcType="VARCHAR" property="secuTypeCode" />
+    <result column="PROPRE_STATUS" jdbcType="VARCHAR" property="propreStatus" />
+    <result column="SYMBOL" jdbcType="VARCHAR" property="symbol" />
+    <result column="MARKET_CODE" jdbcType="VARCHAR" property="marketCode" />
+    <result column="FIRST_BUY_DATE" jdbcType="TIMESTAMP" property="firstBuyDate" />
+    <result column="CCY" jdbcType="VARCHAR" property="ccy" />
+    <result column="PE_QTY" jdbcType="DECIMAL" property="peQty" />
+    <result column="MARKET_PRICE" jdbcType="DECIMAL" property="marketPrice" />
+    <result column="VALUATION_PRICE" jdbcType="DECIMAL" property="valuationPrice" />
+    <result column="PREV_MARKET_PRICE" jdbcType="DECIMAL" property="prevMarketPrice" />
+    <result column="PREV_VALUATION_PRICE" jdbcType="DECIMAL" property="prevValuationPrice" />
+    <result column="UNIT_COST" jdbcType="DECIMAL" property="unitCost" />
+    <result column="POS_COST" jdbcType="DECIMAL" property="posCost" />
+    <result column="MKT_VALUE" jdbcType="DECIMAL" property="mktValue" />
+    <result column="PREV_MKT_VALUE" jdbcType="DECIMAL" property="prevMktValue" />
+    <result column="WEIGHT_FOR_ALLOCATION_ASSET" jdbcType="DECIMAL" property="weightForAllocationAsset" />
+    <result column="WEIGHT_FOR_NET_ASSET" jdbcType="DECIMAL" property="weightForNetAsset" />
+    <result column="WEIGHT_FOR_TOTAL_ASSET" jdbcType="DECIMAL" property="weightForTotalAsset" />
+    <result column="DAILY_UNREALIZED_PNL" jdbcType="DECIMAL" property="dailyUnrealizedPnl" />
+    <result column="DAILY_REALIZED_PNL" jdbcType="DECIMAL" property="dailyRealizedPnl" />
+    <result column="DAILY_PNL" jdbcType="DECIMAL" property="dailyPnl" />
+    <result column="ACCUM_PNL" jdbcType="DECIMAL" property="accumPnl" />
+    <result column="DAILY_CONTRIBUTION" jdbcType="DECIMAL" property="dailyContribution" />
+    <result column="DAILY_RETURN" jdbcType="DECIMAL" property="dailyReturn" />
+    <result column="PREV_YTD_RETURN" jdbcType="DECIMAL" property="prevYtdReturn" />
+    <result column="YTD_RETURN" jdbcType="DECIMAL" property="ytdReturn" />
+    <result column="PREV_CUMUL_RETURN" jdbcType="DECIMAL" property="prevCumulReturn" />
+    <result column="CUMUL_RETURN" jdbcType="DECIMAL" property="cumulReturn" />
+    <result column="PE" jdbcType="DECIMAL" property="pe" />
+    <result column="PB" jdbcType="DECIMAL" property="pb" />
+    <result column="VOLATILITY" jdbcType="DECIMAL" property="volatility" />
+    <result column="TURNOVER" jdbcType="DECIMAL" property="turnover" />
+    <result column="HEDGE_RATIO" jdbcType="DECIMAL" property="hedgeRatio" />
+    <result column="ACCUM_BUY_AMOUNT" jdbcType="DECIMAL" property="accumBuyAmount" />
+    <result column="ACCUM_SELL_AMOUNT" jdbcType="DECIMAL" property="accumSellAmount" />
+    <result column="TODAY_BUY_AMOUNT" jdbcType="DECIMAL" property="todayBuyAmount" />
+    <result column="TODAY_SELL_AMOUNT" jdbcType="DECIMAL" property="todaySellAmount" />
+  </resultMap>
+</mapper>

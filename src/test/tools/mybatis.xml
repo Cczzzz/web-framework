@@ -55,9 +55,7 @@
                              targetPackage="${javaPath}" targetProject="${projectPath}">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="BENCHMARK_INFO"/>
-        <table tableName="SYS_USER">
-            <generatedKey column="id" sqlStatement="S_"/>
-        </table>
+        <table tableName="PMS_EQUITY_POSITION"/>
+
     </context>
 </generatorConfiguration>
