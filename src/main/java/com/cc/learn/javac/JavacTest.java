@@ -1,4 +1,4 @@
-package com.cc.javac;
+package com.cc.learn.javac;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;

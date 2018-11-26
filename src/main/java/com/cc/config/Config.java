@@ -85,10 +85,5 @@ public class Config {
         filterBean.setInitParameters(initParameters);
         return filterBean;
     }
-//
-//    @Bean
-//    public Pool<Jedis> redisPool() {
-//        BaseJedisRWSeparationPool pool = new JedisWritePool();
-//        return pool;
-//    }
+
 }
