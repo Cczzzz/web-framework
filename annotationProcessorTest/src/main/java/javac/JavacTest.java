@@ -1,4 +1,4 @@
-package com.cc.learn.javac;
+package javac;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
@@ -12,10 +12,12 @@ import java.util.Set;
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class JavacTest extends AbstractProcessor {
 
-
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        System.out.println("123455");
+        System.out.println("我被执行了");
+
+
+
         return false;
     }
 

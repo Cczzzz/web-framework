@@ -59,7 +59,7 @@ public class DbBeanToRedisGenerator {
         classesPath = url.getPath().substring(1, url.getPath().length() - 1);
         projectPath = url.getPath().substring(1, url.getPath().indexOf("target"));
         javaesPath = projectPath + "src/main/java/";
-        packagePath = "com/iquantex/calculate/model";
+        packagePath = "com/cc/bean";
         File root = new File(classesPath + File.separator + packagePath);
         scan(root);
         LOGGER.info("扫描完成。。。");

@@ -1,10 +1,8 @@
 package com.cc.bean;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class Student {
     String name;
     Integer age;
@@ -15,5 +13,6 @@ public class Student {
     public static void main(String[] args) {
 
     }
+
 
 }

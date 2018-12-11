@@ -9,6 +9,7 @@ import org.apache.catalina.util.ParameterMap;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 /**
@@ -19,6 +20,7 @@ public class DisruptorTest {
     static Map<String, Position> positionMap = new ParameterMap<>();
 
     public static void main(String[] args) {
+
         List list = Collections.synchronizedList(new ArrayList<>());
         MyFactory myFactory = new MyFactory();
         ThreadFactory threadFactory = Executors.defaultThreadFactory();
@@ -60,7 +62,9 @@ public class DisruptorTest {
             System.out.println("平均耗时：" + time / dealList.size());
         }
 
-
+        ReentrantLock reentrantLock  = new ReentrantLock();
+        reentrantLock.tryLock();
+        reentrantLock.lock();
     }
 
     public static class LongEventProducerWithTranslator {
@@ -72,6 +76,7 @@ public class DisruptorTest {
 
         public void send(Object obj) {
             long sequence = this.ringBuffer.next();
+
 
             try {
                 DisruptorEvent event = this.ringBuffer.get(sequence);

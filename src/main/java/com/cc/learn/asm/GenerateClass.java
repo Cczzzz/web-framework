@@ -170,17 +170,14 @@ public class GenerateClass {
                 "()V", null, null);
         initVisitor.visitCode();
         initVisitor.visitVarInsn(Opcodes.ALOAD, 0);
-        initVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>",
-                "V()");
+        initVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "V()");
         initVisitor.visitInsn(Opcodes.RETURN);
         initVisitor.visitMaxs(1, 1);
         initVisitor.visitEnd();
 
-        MethodVisitor helloVisitor = classWriter.visitMethod(Opcodes.ACC_PUBLIC, "sayHello",
-                "()V;", null, null);
+        MethodVisitor helloVisitor = classWriter.visitMethod(Opcodes.ACC_PUBLIC, "sayHello", "()V;", null, null);
         helloVisitor.visitCode();
-        helloVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out",
-                "Ljava/io/PrintStream;");
+        helloVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out",   "Ljava/io/PrintStream;");
         helloVisitor.visitLdcInsn("hello world!");
         helloVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream",
                 "println", "(Ljava/lang/String;)V");
