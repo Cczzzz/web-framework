@@ -1,6 +1,6 @@
 package com.cc.demo;
 
-public class test implements Runnable {
+public class         test implements Runnable {
     private volatile Thread thisThead = null;
     private static Object lock = new Object();
 

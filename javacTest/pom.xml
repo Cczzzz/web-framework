@@ -7,6 +7,33 @@
     <groupId>cc</groupId>
     <artifactId>javacTest</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>cc</groupId>
+            <artifactId>annotationProcessorTest</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <annotationProcessorPath>
+                            <groupId>cc</groupId>
+                            <artifactId>annotationProcessorTest</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                        </annotationProcessorPath>
+                    </annotationProcessorPaths>
+                    <annotationProcessors>javac.JavacTest</annotationProcessors>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
 
-
+        </plugins>
+    </build>
 </project>
