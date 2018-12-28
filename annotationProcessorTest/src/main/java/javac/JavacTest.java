@@ -5,12 +5,15 @@ import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.tree.TreeTranslator;
-import com.sun.tools.javac.util.*;
+import com.sun.tools.javac.util.Context;
 import com.sun.tools.javac.util.Name;
+import com.sun.tools.javac.util.Names;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.*;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import java.util.Set;
@@ -57,25 +60,17 @@ public class JavacTest extends AbstractProcessor {
                 processingEnv).getContext();
         make = TreeMaker.instance(context);
         names = Names.instance(context).table;
+
     }
 
     public static class MyTreeTranslator extends TreeTranslator {
 
+
+
         @Override
         public void visitMethodDef(JCTree.JCMethodDecl jcMethodDecl) {
             super.visitMethodDef(jcMethodDecl);
-            //如果方法名叫做getUserName则把它的名字修改成testMethod
-            if (jcMethodDecl.getName().toString().equals("bb")) {
-                JCTree.JCBlock body = jcMethodDecl.getBody();
-                for (JCTree.JCStatement statement : body.getStatements()) {
-                    System.out.println(statement);
-                    System.out.println(statement.getPreferredPosition());
-                    System.out.println(statement.getStartPosition());
-                    System.out.println(statement.getKind());
-                    System.out.println(statement.getTag());
-                }
 
-            }
 //            System.out.println("--------------------------");
 //            System.out.println("修饰符：" + jcMethodDecl.getModifiers());
 //            System.out.println("名称：" + jcMethodDecl.getName());
@@ -85,6 +80,20 @@ public class JavacTest extends AbstractProcessor {
 //            System.out.println("异常：" + jcMethodDecl.getThrows());
 //            System.out.println("方法体" + jcMethodDecl.getBody());
 //            System.out.println("默认值" + jcMethodDecl.getDefaultValue());
+        }
+
+        @Override
+        public void visitUnary(JCTree.JCUnary jcUnary) {
+            super.visitUnary(jcUnary);
+            System.out.println(jcUnary);
+            System.out.println(jcUnary.getOperator());
+        }
+
+        @Override
+        public void visitBinary(JCTree.JCBinary jcBinary) {
+            super.visitBinary(jcBinary);
+            System.out.println(jcBinary);
+            System.out.println(jcBinary.getOperator());
         }
     }
 
