@@ -18,10 +18,8 @@ public class test {
     }
 
     public int bb() {
-
         int a = 1;
         int b = 2;
-
         System.out.println("aaaa");
         return a + b;
     }

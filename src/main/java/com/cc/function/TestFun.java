@@ -27,7 +27,7 @@ public class TestFun {
 
     static fun<Student, String> function = student -> {
 
-        System.out.println(2/0);
+//        System.out.println(2/0);
         return student.getName();
     };
 
@@ -35,6 +35,9 @@ public class TestFun {
         Student student = new Student();
         student.setName("aaaa");
         System.out.println(function.applyA(student));
+        StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+        StackTraceElement element = ste[2];
+        System.out.println(element.getClassName() + ";" + element.getMethodName() + ";" + element.getLineNumber());
 
     }
 }

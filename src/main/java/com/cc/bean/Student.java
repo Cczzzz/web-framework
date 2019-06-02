@@ -1,11 +1,20 @@
 package com.cc.bean;
 
 
+<<<<<<< HEAD
+=======
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+>>>>>>> b8ba36e81f0283b8ce7acb681c8ee4d2dfb9c73a
 public class Student {
     String name;
     Integer age;
     boolean activity;
     String className;
+<<<<<<< HEAD
 
     public String getName() {
         return name;
@@ -44,4 +53,7 @@ public class Student {
     }
 
 
+=======
+>>>>>>> b8ba36e81f0283b8ce7acb681c8ee4d2dfb9c73a
 }
+
