@@ -45,7 +45,7 @@ public class Config {
 
         MapperScannerConfigurer scan = new MapperScannerConfigurer();
         scan.setSqlSessionFactoryBeanName("sqlSessionFactory"); // 多数据源时，必须配置
-        scan.setBasePackage("com.cc.demo.dao.java");//mapper.java文件的路径
+        scan.setBasePackage("com.cc.OioServer.dao.java");//mapper.java文件的路径
         scan.setMarkerInterface(BaseMapper.class); // 直接继承了BaseDao接口的才会被扫描，basePackage可以配置的范围更大。
         scan.setProperties(properties);
         return scan;

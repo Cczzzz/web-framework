@@ -9,19 +9,14 @@ public class ToMT4 {
 
         try (ZContext context = new ZContext(1)) {
             // Socket to talk to clients
-            ZMQ.Socket socket = context.createSocket(ZMQ.REP);
+            ZMQ.Socket socket = context.createSocket(ZMQ.PUSH);
             socket.bind("tcp://*:5555");
             // Send a response
-
             while (!Thread.currentThread().isInterrupted()) {
                 // Block until a message is received
-                byte[] reply = socket.recv(0);
-                String s = new String(reply, ZMQ.CHARSET);
                 // Print the message
-                System.out.println(
-                        "c Received: [" + new String(reply, ZMQ.CHARSET) + "]"
-                );
-                socket.send(s + "nnnnn");
+                socket.send("nnnnn",ZMQ.DONTWAIT);
+                System.out.println("aaaaaaaaaa");
             }
         }
     }

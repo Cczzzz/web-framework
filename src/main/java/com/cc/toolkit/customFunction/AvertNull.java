@@ -50,8 +50,6 @@ public class AvertNull<T> {
                 return r;
             }
         }
-
-
     }
     static class Bean {
         String name;

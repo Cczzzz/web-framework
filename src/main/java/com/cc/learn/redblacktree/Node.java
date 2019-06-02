@@ -5,7 +5,6 @@ import lombok.Data;
 /**
  * Created by chenchang on 2018/11/22.
  */
-@Data
 abstract class Node<T> implements Comparable<T> {
 
     private boolean isRed; //isRed
@@ -17,6 +16,45 @@ abstract class Node<T> implements Comparable<T> {
 
     Node<T> parent; //父节点
 
+    public boolean isRed() {
+        return isRed;
+    }
+
+    public void setRed(boolean red) {
+        isRed = red;
+    }
+
+    public T getKey() {
+        return key;
+    }
+
+    public void setKey(T key) {
+        this.key = key;
+    }
+
+    public Node<T> getLeft() {
+        return left;
+    }
+
+    public void setLeft(Node<T> left) {
+        this.left = left;
+    }
+
+    public Node<T> getRight() {
+        return right;
+    }
+
+    public void setRight(Node<T> right) {
+        this.right = right;
+    }
+
+    public Node<T> getParent() {
+        return parent;
+    }
+
+    public void setParent(Node<T> parent) {
+        this.parent = parent;
+    }
 
     static class Tree<T> {
 

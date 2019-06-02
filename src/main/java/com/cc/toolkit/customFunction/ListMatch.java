@@ -10,8 +10,7 @@ import java.util.function.Function;
 /**
  * Created by chenchang on 2018/10/11.
  */
-@Setter
-@Getter
+
 public class ListMatch<T> implements Iterable<ListMatch.both<T>> {
     private Collection<T> pList;
 
@@ -23,6 +22,29 @@ public class ListMatch<T> implements Iterable<ListMatch.both<T>> {
 
     private Map<Object, T> map;
 
+    public Collection<T> getpList() {
+        return pList;
+    }
+
+    public void setpList(Collection<T> pList) {
+        this.pList = pList;
+    }
+
+    public Function<T, Object> getKeyFun() {
+        return keyFun;
+    }
+
+    public void setKeyFun(Function<T, Object> keyFun) {
+        this.keyFun = keyFun;
+    }
+
+    public Map<Object, T> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<Object, T> map) {
+        this.map = map;
+    }
 
     public static <T> ListMatch<T> of(Collection<T> start, Collection<T> end, Function<T, Object> keyFun) {
         return of(start, end, keyFun, true);

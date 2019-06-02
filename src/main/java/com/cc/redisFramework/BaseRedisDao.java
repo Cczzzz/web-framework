@@ -22,7 +22,7 @@ public abstract class BaseRedisDao<T> implements RedisDao<T> {
         String RedisKey = getRedisKey(t);
         Jedis jedis = jedisPool.getResource();
         jedis.hmset(RedisKey, toMap(t));
-    }
+    } 
 
     @Override
     public T getFromRedis() {
@@ -60,10 +60,8 @@ public abstract class BaseRedisDao<T> implements RedisDao<T> {
 
     private static <T> void loadFromMap(Map<String, String> fieldValueMap, T t) {
         try {
-            Iterator e = fieldValueMap.keySet().iterator();
 
-            while (e.hasNext()) {
-                String key = (String) e.next();
+            for (String key : fieldValueMap.keySet()) {
                 Field f = null;
                 try {
                     f = t.getClass().getDeclaredField(key);
@@ -76,11 +74,11 @@ public abstract class BaseRedisDao<T> implements RedisDao<T> {
                     f.set(t, value);
                 } else if (value != null && !value.equals("")) {
                     if (f.getType() == Integer.class) {
-                        f.set(t, Integer.valueOf(Integer.parseInt(value)));
+                        f.set(t, Integer.parseInt(value));
                     } else if (f.getType() == Double.class) {
-                        f.set(t, Double.valueOf(Double.parseDouble(value)));
+                        f.set(t, Double.parseDouble(value));
                     } else if (f.getType() == Long.class) {
-                        f.set(t, Long.valueOf(Long.parseLong(value)));
+                        f.set(t, Long.parseLong(value));
                     }
                 }
             }
